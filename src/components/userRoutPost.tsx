@@ -1,37 +1,52 @@
-// Dados a serem enviados no corpo da requisição
-const data = {
-  title: 'Teste Conquista',
-  descricao: 'Descrição da nova conquista',
-  meta: 100
+
+export  async function enviarImgProduto(data: { profile: File[] }) {
+  const image = data.profile[0];
+  const formData = new FormData();
+  const clodname = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET_PRODUCT;
+  const name = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+  if (!clodname || !name ) {
+      console.error("Cloud name ou upload preset não estão definidos.");
+      return null;
+    }
+  
+  formData.append("file", image);
+  formData.append("upload_preset", clodname);
+  const uploadResponse = await fetch(
+    `https://api.cloudinary.com/v1_1/${name}/image/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  const uploadedImageData = await uploadResponse.json();
+  const imageUrl = uploadedImageData.secure_url;
+  console.log(imageUrl);
 };
 
-// Função para fazer o POST para o endpoint
-async function createConquista() {
-  try {
-    // Enviar a requisição POST
-    const response = await fetch('https://api-verbix.vercel.app/api/conquistas', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Indica que estamos enviando dados em JSON
-      },
-      body: JSON.stringify(data), // Convertendo o objeto JavaScript em JSON
-    });
 
-    const responseText = await response.text(); // Lê a resposta como texto para debugar
-    if (response.ok) {
-      let result = {};
-      try {
-        result = JSON.parse(responseText); // Tenta fazer o parse manualmente
-      } catch (e) {
-        console.error('Erro ao parsear JSON:', e);
-      }
-      console.log('Conquista criada:', result);
-    } else {
-      console.error('Erro na requisição:', response.status, response.statusText, responseText);
+
+export  async function enviarImgProfile(data: { profile: File[] }) {
+  const image = data.profile[0];
+  const formData = new FormData();
+  const clodname = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+  const name = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+  if (!clodname || !name ) {
+      console.error("Cloud name ou upload preset não estão definidos.");
+      return null;
     }
-  } catch (error) {
-    console.error('Erro ao fazer requisição:', error);
-  }
-}
-
-export default createConquista;
+  
+  formData.append("file", image);
+  formData.append("upload_preset", clodname);
+  const uploadResponse = await fetch(
+    `https://api.cloudinary.com/v1_1/${name}/image/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  const uploadedImageData = await uploadResponse.json();
+  const imageUrl = uploadedImageData.secure_url;
+  console.log(imageUrl);
+};
