@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { enviarImgProfile } from '../../../components/userRoutPost';
 
-export async function GET(request: Request) {
+export async function GET() {
   return new Response('Oie', { status: 200 });
 }
 
