@@ -27,7 +27,7 @@ export default function TestUploadPage() {
     formData.append("profile", selectedFile);
 
     try {
-      const res = await fetch("/api/imagens", {
+      const res = await fetch("https://api-img-psi.vercel.app/api/imagens", {
         method: "POST",
         body: formData,
       });
