@@ -22,6 +22,7 @@ export  async function enviarImgProduto(data: { profile: File[] }) {
   const uploadedImageData = await uploadResponse.json();
   const imageUrl = uploadedImageData.secure_url;
   console.log(imageUrl);
+  return imageUrl;
 };
 
 
@@ -49,4 +50,6 @@ export  async function enviarImgProfile(data: { profile: File[] }) {
   const uploadedImageData = await uploadResponse.json();
   const imageUrl = uploadedImageData.secure_url;
   console.log(imageUrl);
+  return imageUrl;
+ 
 };

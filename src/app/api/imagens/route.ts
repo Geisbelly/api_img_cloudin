@@ -11,9 +11,9 @@ export async function POST(req: Request) {
     // Lê os dados do FormDat
     const formData = await req.formData();
     const files = formData.getAll("profile").filter(item => item instanceof File) as File[];
-    await enviarImgProduto({ profile: files });
+    const resp = await enviarImgProduto({ profile: files });
 
-    return NextResponse.json({ message: 'Imagem criada com sucesso' }, { status: 201 });
+    return NextResponse.json({ message: 'Imagem criada com sucesso', data: resp }, { status: 201 });
   } catch (error) {
     console.error('Erro ao criar img:', error);
     return NextResponse.json({ error: 'Erro ao criar imagem' }, { status: 500 });

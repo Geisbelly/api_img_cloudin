@@ -33,6 +33,8 @@ export default function TestUploadPage() {
       });
       const data = await res.json();
       setMessage(data.message || "Upload realizado com sucesso!");
+      //return data.secure_url;
+    
     } catch (error) {
       console.error("Erro ao enviar arquivo:", error);
       setMessage("Erro ao enviar arquivo.");
